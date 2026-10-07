@@ -21,6 +21,7 @@ mongoose
 // load the dataabase models we want to deal with
 const { Message } = require('./models/Message')
 const { User } = require('./models/User')
+const { AboutUs} = require('./models/AboutUs')
 
 // a route to handle fetching all messages
 app.get('/messages', async (req, res) => {
@@ -57,6 +58,24 @@ app.get('/messages/:messageId', async (req, res) => {
     })
   }
 })
+
+app.get('/aboutUs', async (req, res) => {
+  try {
+    const aboutUs = await AboutUs.find();
+    res.json(aboutUs);
+  } catch (err) {
+    console.error(err)
+    res.status(400).json({
+      error: err,
+      status: 'failed to retrieve messages from the database',
+    })
+  }
+})
+
+app.get('/aboutUsImage', async (req, res) => {
+  res.sendFile("/IMG_3219.heif");
+})
+
 // a route to handle logging out users
 app.post('/messages/save', async (req, res) => {
   // try to save the message to the database
