@@ -61,13 +61,20 @@ app.get('/messages/:messageId', async (req, res) => {
 
 app.get('/aboutUs', async (req, res) => {
   try {
-    const aboutUs = await AboutUs.find();
-    res.json(aboutUs);
+    const aboutUs = await AboutUs.findOne()
+    console.log(aboutUs);
+    if (!aboutUs) {
+      return res.status(404).json({
+        status: 'no About Us information was found',
+      })
+    }
+    
+    return res.json({ aboutUs })
   } catch (err) {
     console.error(err)
-    res.status(400).json({
+    return res.status(500).json({
       error: err,
-      status: 'failed to retrieve messages from the database',
+      status: 'failed to retrieve About Us information from the database',
     })
   }
 })

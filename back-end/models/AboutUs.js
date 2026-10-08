@@ -5,20 +5,19 @@ const aboutUsSchema = new Schema(
   {
     name: {
       type: String,
-      required: true,
     },
     
     description: {
       type: String,
-      required: true,
+      
     },
   }
 )
 
 // create mongoose Model
-const aboutUs = mongoose.model('User', aboutUsSchema)
+const AboutUs = mongoose.model('AboutUs', aboutUsSchema, 'AboutUs')
 
 // export the model so other modules can import it
 module.exports = {
-  aboutUs,
+  AboutUs,
 }

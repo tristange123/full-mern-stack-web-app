@@ -10,36 +10,36 @@ import { useState, useEffect } from 'react'
  * @returns The contents of this component, in JSX form.
  */
 const AboutUs= props => {
-    const [name, setName] = useState("")
-    const [description, setDescription] = useState("")
+    const [aboutUs, setAboutUs] = useState(null)
     const [url, setUrl] = useState("")
-  const fetchAboutUs = () => {
-    // setMessages([])
-    // setLoaded(false)
-    axios
-      .get(`${import.meta.env.VITE_SERVER_HOSTNAME}/messages`)
-      .then(response => {
-        const name = response.data.name
-        const description response.data.description
-        setName(messages)
-        set
-      })
-      .catch(err => {
-        const errMsg = JSON.stringify(err, null, 2) // convert error object to a string so we can simply dump it to the screen
-        setError(errMsg)
-      })
-      .finally(() => {
-        // the response has been received, so remove the loading icon
-        setLoaded(true)
-      })
-  }
+    const [error, setError] = useState("")
+    
+    useEffect(() => {
+        const fetchAboutUs = async () => {
+            try {
+                const response = await axios.get(
+                    `${import.meta.env.VITE_SERVER_HOSTNAME}/aboutUs`,
+                 
+                )
+                console.log(response)
+                setAboutUs(response.data.aboutUs)
+            } catch (err) {
+                setError("Failed to load About Us information.")
+            }
+        }
+
+        fetchAboutUs();
+    }, [])
+   
+        
   return (
     <>
       <h1>About Us</h1>
-      <p></p>
-      <p>
-        
-      </p>
+      <h2>{aboutUs.name}</h2>
+
+      <p>{aboutUs.description}</p>
+      <img src = "/aboutUsImage.png"></img>
+     
     </>
   )
 }
